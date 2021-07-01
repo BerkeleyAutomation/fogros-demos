@@ -1,0 +1,10 @@
+Elapsed time: 25.6945
+Elapsed time: 17.5945
+Elapsed time: 68.5974
+Elapsed time: 55.697
+Elapsed time: 63.196
+Elapsed time: 33.194
+Elapsed time: 11.2962
+Elapsed time: 7.69842
+Elapsed time: 15.1977
+Elapsed time: 59.996
