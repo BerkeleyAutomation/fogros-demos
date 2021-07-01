@@ -1,0 +1,70 @@
+FROM ros:noetic-ros-core
+
+SHELL [ "/bin/bash", "-c" ]
+
+# Install basics 
+RUN apt-get update && apt-get install --no-install-recommends -y \
+    software-properties-common \
+    build-essential \
+    curl \
+    git \
+    wget \
+    unzip \
+    libgl1-mesa-glx \
+    freeglut3-dev \
+    libfreetype6-dev \
+    libpng-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install python 3.8 and python minimal deps
+RUN add-apt-repository ppa:deadsnakes/ppa
+RUN apt-get update && apt-get -y install  \
+    python3.8 \
+    python3.8-dev \
+    python3-pip \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.8 1
+RUN python3 -m pip install --no-cache-dir --upgrade setuptools pip wheel numpy netifaces
+
+# Install nvidia-tensorflow (for Ubuntu 20.04/Python3.8/TF 1.x)
+RUN python3 -m pip install --no-cache-dir nvidia-pyindex
+RUN python3 -m pip install --no-cache-dir nvidia-tensorflow
+
+# Install GQCNN package
+ENV GQCNN_VERSION v1.2.0
+RUN mkdir -p /root/gqcnn
+RUN curl -sSL https://github.com/BerkeleyAutomation/gqcnn/archive/${GQCNN_VERSION}.tar.gz \
+		| tar -v -C /root/gqcnn/ -xz --strip-components 1
+RUN python3 -m pip install --no-cache-dir /root/gqcnn
+
+# Install ROS deps
+RUN apt-get update && apt-get install --no-install-recommends -y \
+    ros-noetic-ros-numpy \
+    ros-noetic-image-common \
+    ros-noetic-cv-bridge \
+    ros-noetic-dynamic-reconfigure \
+    libogg-dev \
+    libtheora-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install ROS wrapper and image transport fork
+RUN mkdir -p /root/catkin_ws/src
+ENV CATKIN_WS /root/catkin_ws
+
+WORKDIR $CATKIN_WS/src
+
+RUN git clone https://github.com/tlind/image_transport_plugins.git &&  \
+    cd image_transport_plugins && \
+    git checkout bugfix/63-regression-compressed-depth-image-format
+
+RUN mkdir -p gqcnn-ros/
+COPY [ ".",  "gqcnn-ros/" ]
+
+RUN source /opt/ros/noetic/setup.bash && cd .. \
+    && catkin_make install -DCMAKE_INSTALL_PREFIX=/opt/ros/noetic/
+
+WORKDIR /
+RUN $CATKIN_WS/src/gqcnn-ros/scripts/download_fc_suction_model.sh
+
+CMD [ "roslaunch", "gqcnn_ros", "gqcnn_ros_planner.launch" ]
