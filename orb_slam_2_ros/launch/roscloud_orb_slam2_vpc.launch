@@ -1,0 +1,28 @@
+  
+<launch>
+
+<node name="leader" pkg="roscloud" type="roscloud_vpc.py" output="screen">
+        <param name="instance_type" value="t2.large"/>
+        <param name="launch_file" value="/home/ubuntu/catkin_ws/src/roscloud/launch/orb_slam2.launch" />
+        <param name="env_script" value="/home/ubuntu/catkin_ws/src/roscloud/launch/orb_slam2_terA.bash"/>
+  </node>
+
+  <node name="follower1" pkg="roscloud" type="roscloud_vpc.py" output="screen">
+  	<param name="instance_type" value="t2.large"/>
+   	<param name="launch_file" value="/home/ubuntu/catkin_ws/src/roscloud/launch/orb_slam2.launch" />
+  	<param name="env_script" value="/home/ubuntu/catkin_ws/src/roscloud/launch/orb_slam2_terB.bash"/>
+  </node>
+
+  <node name="follower2" pkg="roscloud" type="roscloud_vpc.py" output="screen">
+  	<param name="instance_type" value="t2.large"/>
+   	<param name="launch_file" value="/home/ubuntu/catkin_ws/src/roscloud/launch/orb_slam2.launch" />
+  	<param name="env_script" value="/home/ubuntu/catkin_ws/src/roscloud/launch/orb_slam2_terC.bash"/>
+  </node>
+
+  <node name="follower3" pkg="roscloud" type="roscloud_vpc.py" output="screen">
+    <param name="instance_type" value="t2.large"/>
+    <param name="launch_file" value="/home/ubuntu/catkin_ws/src/roscloud/launch/orb_slam2.launch" />
+    <param name="env_script" value="/home/ubuntu/catkin_ws/src/roscloud/launch/orb_slam2_terD.bash"/>
+  </node>
+
+</launch>
