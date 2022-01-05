@@ -36,8 +36,7 @@ from timeit import default_timer as timer
 import numpy as np
 import rospy
 
-from autolab_core import YamlConfig
-from perception import CameraIntrinsics, ColorImage, DepthImage, BinaryImage, RgbdImage
+from autolab_core import YamlConfig, CameraIntrinsics, ColorImage, DepthImage, BinaryImage, RgbdImage
 from gqcnn.grasping import (RgbdImageState,
                             FullyConvolutionalGraspingPolicyParallelJaw,
                             FullyConvolutionalGraspingPolicySuction,
@@ -114,7 +113,7 @@ class GraspPlanner(object):
             rescale_factor=self.cfg["inpaint_rescale_factor"])
 
         # Aggregate color and depth images into a single
-        # BerkeleyAutomation/perception `RgbdImage`.
+        # BerkeleyAutomation/autolab_core `RgbdImage`.
         rgbd_im = RgbdImage.from_color_and_depth(color_im, depth_im)
 
         # Create an `RgbdImageState` with `RgbdImage` and `CameraIntrinsics`.

@@ -11,7 +11,7 @@ catkin_make
 
 Also, install python dependencies for the client. As always, a virtual environment is recommended.
 ```shell
-pip install autolab_core visualization autolab_perception
+pip install autolab_core visualization
 ```
 
 # Build Docker Images

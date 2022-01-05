@@ -40,8 +40,7 @@ mpl.use("Agg")
 import matplotlib.pyplot as plt
 from timeit import default_timer as timer
 
-from autolab_core import Logger, Point
-from perception import CameraIntrinsics, DepthImage, BinaryImage
+from autolab_core import Logger, Point, CameraIntrinsics, DepthImage, BinaryImage
 from visualization import Visualizer2D as vis2d
 
 from std_msgs.msg import Header
