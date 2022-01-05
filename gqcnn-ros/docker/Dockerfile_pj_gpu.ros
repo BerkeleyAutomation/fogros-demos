@@ -32,7 +32,7 @@ RUN python3 -m pip install --no-cache-dir nvidia-pyindex
 RUN python3 -m pip install --no-cache-dir nvidia-tensorflow
 
 # Install GQCNN package
-ENV GQCNN_VERSION v1.2.0
+ENV GQCNN_VERSION v1.3.0
 RUN mkdir -p /root/gqcnn
 RUN curl -sSL https://github.com/BerkeleyAutomation/gqcnn/archive/${GQCNN_VERSION}.tar.gz \
 		| tar -v -C /root/gqcnn/ -xz --strip-components 1

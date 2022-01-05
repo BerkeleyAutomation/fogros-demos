@@ -28,7 +28,7 @@ RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.7 1
 RUN python3.7 -m pip install --no-cache-dir --upgrade setuptools pip wheel numpy netifaces
 
 # Install GQCNN package
-ENV GQCNN_VERSION v1.2.0
+ENV GQCNN_VERSION v1.3.0
 RUN /bin/bash -c "mkdir -p /root/gqcnn"
 RUN curl -sSL https://github.com/BerkeleyAutomation/gqcnn/archive/${GQCNN_VERSION}.tar.gz \
 		| tar -v -C /root/gqcnn/ -xz --strip-components 1
